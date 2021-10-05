@@ -44,6 +44,9 @@ stream:
                       '%FFMPEG% -re -dual_mono_mode main -i pipe:0 -sn -threads 0 -c:a aac -ar 48000 -b:a 192k -ac 2
                       -c:v libx264 -vf yadif,scale=-2:720 -b:v 3000k -preset veryfast -y -f mpegts pipe:1'
                 - name: 無変換
+                - name: 主音声のみ
+                  cmd:
+                      '%FFMPEG% -re -dual_mono_mode main -i pipe:0 -sn -threads 0 -c:a aac -ar 48000 -c:v copy -y -f mpegts pipe:1'
 ```
 
 ### 2. IPTV Simple Client の設定
@@ -55,6 +58,8 @@ http://host:port/api/iptv/channel.m3u8?mode=1
 ```
 
 `?mode=1` の 1 は `stram/live/ts/m2ts` の指定をしています。0 から数えるので上記の設定では `無変換` が指定されます
+
+`?mode=2` で`主音声のみ`を指定することで、二ヶ国語放送から日本語のみを取り出してライブ視聴できます
 
 #### XMLTV URL
 
